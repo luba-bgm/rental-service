@@ -26,7 +26,7 @@ Offer.init(
         "Paris",
         "Cologne",
         "Brussels",
-        "Amstrerdam",
+        "Amsterdam",
         "Hamburg",
         "Dusseldorf"
       ),
