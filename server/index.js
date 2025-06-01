@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 import * as dotenv from "dotenv";
 import sequelize from "./config/database.js";
 import cors from "cors";
-import path from 'path';
 import { router } from "./routes/index.js";
-import errorMiddleware from './middleware/ErrorHandlingMiddleware.js';
-import {fileURLToPath} from 'url';
+import errorHandlingMiddleware from "./middleware/ErrorHandlingMiddleware.js";
+import { fileURLToPath } from "url";
+import path from "path";
 
 dotenv.config();
 
@@ -18,21 +18,19 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/static', express.static(path.resolve(__dirname, 'static')));
-
+app.use("/static", express.static(path.resolve(__dirname, "static")));
 app.use("/", router);
+app.use(errorHandlingMiddleware);
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: " Ура! Все заработало!" });
+  res.status(200).json({ message: "Yahoo! It's working!" });
 });
-
-app.use(errorMiddleware);
 
 const start = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
-    app.listen(PORT, () => console.log(`Сервер запущен на порте ${PORT}`));
+    app.listen(PORT, () => console.log(`Server run on ${PORT} port`));
   } catch (e) {
     console.log(e);
   }

@@ -4,20 +4,19 @@ const cityCoordinates = {
   Brussels: { latitude: 50.8503, longitude: 4.3517, zoom: 13 },
   Amsterdam: { latitude: 52.3676, longitude: 4.9041, zoom: 13 },
   Hamburg: { latitude: 53.5511, longitude: 9.9937, zoom: 13 },
-  Dusseldorf: { latitude: 51.2277, longitude: 6.7735, zoom: 13 }
+  Dusseldorf: { latitude: 51.2277, longitude: 6.7735, zoom: 13 },
 };
 
 const getBaseUrl = () => `${process.env.HOST}:${process.env.PORT || 5000}`;
-
 const adaptOfferToClient = (offer) => {
   const baseUrl = getBaseUrl();
   const cityLocation = cityCoordinates[offer.city];
-
   let previewImage = offer.previewImage;
-  if (previewImage && !previewImage.startsWith('http')) {
-    previewImage = `${baseUrl}${previewImage.startsWith('/') ? '' : '/'}${previewImage}`;
+  if (previewImage && !previewImage.startsWith("http")) {
+    previewImage = `${baseUrl}${
+      previewImage.startsWith("/") ? "" : "/"
+    }${previewImage}`;
   }
-
   return {
     id: String(offer.id),
     title: offer.title,
@@ -25,59 +24,57 @@ const adaptOfferToClient = (offer) => {
     price: offer.price,
     city: {
       name: offer.city,
-      location: cityLocation
+      location: cityLocation,
     },
-    location: offer.latitude && offer.longitude ? {
-      latitude: offer.latitude,
-      longitude: offer.longitude
-    } : { latitude: 0, longitude: 0 },
+    location:
+      offer.latitude && offer.longitude
+        ? {
+            latitude: offer.latitude,
+            longitude: offer.longitude,
+          }
+        : { latitude: 0, longitude: 0 },
     isFavorite: offer.isFavorite,
     isPremium: offer.isPremium,
     rating: parseFloat(offer.rating),
-    previewImage
+    previewImage,
   };
 };
 
-const adaptFullOfferToClient = (offer, author) => {
+const adaptFullOfferToClient = (offer) => {
   const baseUrl = getBaseUrl();
   const cityLocation = cityCoordinates[offer.city];
-
   let previewImage = offer.previewImage;
-  if (previewImage && !previewImage.startsWith('http')) {
-    previewImage = `${baseUrl}${previewImage.startsWith('/') ? '' : '/'}${previewImage}`;
+  if (previewImage && !previewImage.startsWith("http")) {
+    previewImage = `${baseUrl}${
+      previewImage.startsWith("/") ? "" : "/"
+    }${previewImage}`;
   }
-
   return {
     id: String(offer.id),
     title: offer.title,
-    description: offer.description,
-    publishDate: offer.publishDate,
+    type: offer.type,
+    price: offer.price,
     city: {
       name: offer.city,
-      location: cityLocation
+      location: cityLocation,
     },
-    previewImage,
-    photos: (offer.photos || []).map(photo =>
-      photo.startsWith('http') ? photo : `${baseUrl}/${photo}`
-    ),
-    isPremium: offer.isPremium,
+    location:
+      offer.latitude && offer.longitude
+        ? {
+            latitude: offer.latitude,
+            longitude: offer.longitude,
+          }
+        : { latitude: 0, longitude: 0 },
     isFavorite: offer.isFavorite,
+    isPremium: offer.isPremium,
     rating: parseFloat(offer.rating),
-    type: offer.type,
-    guests: offer.guests,
-    price: offer.price,
-    features: offer.features,
-    commentsCount: offer.commentsCount,
-    location: {
-      latitude: offer.latitude,
-      longitude: offer.longitude
-    },
-    author: {
-      id: author.id,
-      name: author.name,
-      email: author.email
-    }
+    description: offer.description,
+    rooms: offer.rooms,
+    bedrooms: offer.guests,
+    goods: offer.features,
+    host: offer.author,
+    images: offer.photos,
   };
 };
 
-export {adaptOfferToClient, adaptFullOfferToClient};
+export { adaptOfferToClient, adaptFullOfferToClient };

@@ -62,6 +62,11 @@ Offer.init(
       allowNull: false,
       validate: { min: 1, max: 10 },
     },
+    rooms: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: { min: 1, max: 8 },
+    },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false,
