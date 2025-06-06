@@ -1,3 +1,4 @@
+import { Logo } from "../../components/logo/logo";
 function Favorites() {
     return (
       <body>
@@ -177,13 +178,7 @@ function Favorites() {
         </main>
         <footer className="footer container">
           <a className="footer__logo-link" href="main.html">
-            <img
-              className="footer__logo"
-              src="img/logo.svg"
-              alt="Rent service logo"
-              width="64"
-              height="33"
-            />
+            <Logo />
           </a>
         </footer>
       </body>
